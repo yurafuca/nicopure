@@ -1,0 +1,48 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/popup.css">
+	<link rel="stylesheet" type="text/css" href="/fonts/octicons-5.0.1/lib/octicons.css">
+</head>
+
+<body style="width: 660px;">
+	<span class="octicon file-directory"></span>
+	<div id="menu">
+		<!-- <div id="header" class="header">マイリスト一覧</div>    -->
+		<div id="mylistgroup" class="header-child"></div>
+	</div>
+	<div id="mainview" style="overflow: hidden;">
+		<div id="mylistheader">
+			<div id="headericon"></div>
+			<!-- <form id="search-container">
+				<select id="search-sort" name="sort" onChange={this.changeSortMode} value={this.state.sortMode}>
+					<option value="startTime-dsc">放送日時が近い順</option>
+					<option value="startTime-asc">放送日時が遠い順</option>
+					<option value="viewCounter-dsc">来場者数が多い順</option>
+					<option value="viewCounter-asc">来場者数が少ない順</option>
+					<option value="commentCounter-dsc">コメント数が多い順</option>
+					<option value="commentCounter-asc">コメント数が少ない順</option>
+				</select>
+			</form> -->
+			<div>
+				<span class="indicator"></span>
+				<div id="mylisttitle">左のメニューからマイリストを選択してください&nbsp;😘</div>
+			</div>
+			<a id="go_continuous">
+				<div id="play"></div>
+			</a>
+		</div>
+		<div id="mylistitem" class="logoback"></div>
+	</div>
+	<script src="/javascripts/vendor/jquery-2.1.4.min.js"></script>
+	<script src="/javascripts/nicoapi.js"></script>
+	<script src="/javascripts/mylistview.js"></script>
+	<script src="/javascripts/mylistitemview.js"></script>
+	<script src="/javascripts/popup.js"></script>
+	<script src="/javascripts/loading.js"></script>
+	<script src="/javascripts/video.js"></script>
+	<script src="/javascripts/time.js"></script>
+</body>
+
+</html>

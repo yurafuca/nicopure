@@ -1,0 +1,417 @@
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
+@import url(http://fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+html {
+  height: 100%;
+}
+body {
+  font-family: 'Noto Sans Japanese';
+  margin: 0;
+  font-size: 13px;
+  overflow: hidden !important;
+  color: #222;
+  border: solid 1px #ddd;
+  background-color: #fafbfc;
+}
+.message {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 10px;
+  margin-top: 0;
+}
+#menu {
+  float: left;
+  width: 190px;
+  height: 100%;
+  overflow: hidden;
+  margin-right: 10px;
+  /* border: solid 1px #e1e4e8; */
+  /* box-shadow: 0 0 10px rgba(0,0,0,0.3); */
+}
+#mylistgroup {
+  height: inherit;
+  overflow: auto;
+}
+.header {
+  display: block;
+  padding: 8px 10px;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #24292e;
+  background-color: #f3f5f8;
+  border-bottom: 1px solid #e1e4e8;
+}
+.header:first-child {
+  border-top: 0;
+}
+
+.header:before {
+  content: '';
+  background-image: url(../image/16.png);
+  background-size: 15px;
+  font-size: 15px;
+  float: left;
+  width: 15px;
+  height: 15px;
+  background-repeat: no-repeat;
+  position: relative;
+  top: 5px;
+  left: 0px;
+  margin-right: 7px;
+}
+#savedlist-header:before {
+  background-image: url('../image/ic_video_library_white_48dp_2x.png');
+}
+#search-header:before {
+  background-image: url('../image/ic_search_white_48dp_1x.png');
+}
+.header-child {
+  overflow: auto;
+  padding-bottom: 10px;
+  /* border-top: solid 1px #444; */
+}
+.header-child:last-child {
+  border-bottom: 0;
+}
+.mylist {
+  background-color: white;
+  position: relative;
+  display: block;
+  padding: 7px 10px;
+  border-bottom: 1px solid #e1e4e8;
+  color: #0366d6;
+  border-left: solid 2px transparent;
+  cursor: pointer;
+  border-right: solid 1px #e1e4e8;
+}
+.mylist:last-child {
+  border-radius: 0 0 3px 0;
+}
+.mylist:before {
+  font-family: 'Octicons';
+  content: url('../fonts/octicons-5.0.1/lib/svg/file-directory.svg');
+  color: #444;
+  /* background-image: url('../image/mac-folder.png'); */
+  background-size: 16px;
+  font-size: 19px;
+  float: left;
+  width: 16px;
+  height: 16px;
+  margin-right: 9px;
+  position: relative;
+  background-repeat: no-repeat;
+}
+.selected {
+  /* background-color: white; */
+  /* border-right: 0; */
+  border-left: solid 2px #d36b36;
+}
+.special:after {
+  font-family: 'Material Icons';
+  content: '';
+  background-image: url('../image/ic_open_in_new_white_24dp_1x.png');
+  background-size: 18px;
+  font-size: 18px;
+  float: right;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  top: -3px;
+  right: 7px;
+  background-repeat: no-repeat;
+}
+.history:before {
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  left: -2px;
+  top: -1px;
+  background-image: url('../image/ic_hourglass_empty_white_20dp_1x.png');
+}
+.later:before {
+  background-image: url('../image/ic_watch_later_white_48dp_2x.png');
+}
+.mylist:hover {
+  background-color: #f8f8f8;
+}
+.mylist.selected:hover {
+  background-color: white;
+}
+.mylist:active {
+  /* background-color: #dcdcdc;
+    box-shadow: inset 0 1px 6px rgba(0,0,0,.2); */
+}
+.mylist .id {
+  display: none;
+}
+#mainview {
+  background-color: #f1f1f1;
+}
+#mylistitem {
+  overflow-x: auto;
+  overflow-y: scroll;
+  height: 472px !important;
+  background-color: white;
+  /* border-left: solid 1px #ddd; */
+  /* border-collapse: collapse; */
+  /* text-shadow: 0 1px 0 #fff; */
+  /* padding-top: 5px; */
+  border-bottom: #eee;
+  border-left: solid 1px #e1e4e8;
+}
+.logoback {
+  background-image: url('../image/ff.png');
+  background-size: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#mylistheader {
+  padding: 0 10px;
+  border-left: solid 1px #e1e4e8;
+  text-shadow: 0 1px 0 #fff;
+  background: #f6f8fa;
+  border-bottom: solid 1px #dcdcdc;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Meiryo, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  position: relative;
+  height: 25px;
+  z-index: 999;
+  padding-right: 15px;
+}
+.indicator {
+  float: left;
+  width: 8px;
+  height: 8px;
+  margin-top: 10px;
+  margin-right: 7px;
+  border-radius: 5px;
+  background-color: #28a745;
+  box-shadow: 0 0 10px rgba(108, 198, 68, 0.5);
+}
+#playall-button {
+  float: right;
+  color: white;
+  position: relative;
+  top: 7px;
+  border: solid 1px transparent;
+  background-color: transparent;
+  padding: 1px 6px 1px 0;
+}
+#playall-button span {
+  height: 20px;
+  font-weight: 500;
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Meiryo, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 15px;
+}
+#playall-button:hover {
+  color: #f6cfcb;
+  cursor: pointer;
+}
+#playall-button:hover span:before {
+  background-image: url('../image/ic_play_arrow_white_24dp_2x_hover.png');
+}
+#playall-button span::before {
+  content: ' ';
+  display: inline-block;
+  background-image: url('../image/ic_play_arrow_white_24dp_2x.png');
+  background-size: 20px;
+  width: 15px;
+  height: 15px;
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
+#mylisttitle {
+  display: inline;
+  /*font-weight: bold;*/
+  font-size: 12px;
+  color: #24292e;
+  font-weight: bold;
+  line-height: 28px;
+  position: relative;
+
+  text-shadow: 0 1px 0 #fff;
+  /* font-weight: 500; */
+}
+/* #mylisttitle:before {
+	content: "";
+	background-image: url('../image/ic_playlist_play_white_48dp_2x_trimmed.png');
+	background-size: 23px;
+	font-size: 19px;
+	float:left;
+	width: 23px;
+	height: 23px;
+	background-repeat: no-repeat;
+	position: relative;
+	top: 12px;
+	left: 10px;
+	margin-right: 5px;
+} */
+#search-container {
+  display: inline;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+#query {
+  height: 26px;
+  line-height: 26px;
+  overflow: hidden;
+  position: relative;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-transition: border-color 0.2s ease;
+  -webkit-transition: border-color 0.2s ease;
+  transition: border-color 0.1s ease;
+  /*box-shadow: inset 0 1px 2px #eee;*/
+  transition: background 0.1s, flex 0.1s;
+  border-radius: 2px;
+  width: 139px;
+  padding-left: 7px;
+  background: transparent;
+}
+#query:hover {
+}
+input {
+  border: 0;
+}
+input:focus {
+  border: 0;
+  outline: 0;
+}
+.video {
+  background-color: white;
+  border-bottom: solid 1px #eaeaea;
+  vertical-align: top;
+  /* margin-bottom: 15px; */
+
+  padding: 8px 5px 3px 10px;
+}
+.video:hover {
+}
+.video_length {
+  font-family: 'Noto Sans Japanese';
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  text-shadow: none !important;
+  color: #eee;
+  font-size: 12px;
+  padding: 0px 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-weight: 300;
+  border-radius: 3px;
+}
+.thumbnail {
+  width: 115px;
+  height: 65px;
+  background-color: white;
+  background-repeat: no-repeat;
+  position: relative;
+  background-size: contain;
+  background-position: top center;
+  border-radius: 3px;
+}
+.thumbnail.classic {
+  background-color: black;
+}
+.thumbnail.medium {
+  background-color: white;
+  background-size: contain;
+  background-position: top center;
+}
+.thumbnail.letterbox {
+}
+.thumbnail:hover {
+  /*-webkit-filter: brightness(0.85);*/
+}
+.info {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+}
+.title {
+  font-weight: bold;
+  margin: 5px;
+  margin-bottom: 3px;
+  margin-top: 5px;
+  white-space: nowrap;
+  /* height: 31px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* display: -webkit-box; */
+  /* -webkit-box-orient: vertical; */
+  /* -webkit-line-clamp: 2; */
+  /* color: #4078c0; */
+  line-height: 16px;
+  width: 280px;
+}
+.playurl {
+  display: inline-block;
+}
+.title .playurl {
+  color: #24292e;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.title .playurl:hover {
+  color: #167ac6;
+}
+.count {
+  padding: 0 0 0 5px;
+  margin: 0;
+  color: #767676;
+  font-size: 11px;
+}
+.count .viewcount:after {
+  content: '再生';
+  margin-left: 3px;
+}
+.count .commentcount:after {
+  content: 'コメント';
+  margin-left: 3px;
+}
+.count .subscribeCount:after {
+  content: 'マイリスト';
+  margin-left: 3px;
+}
+.octicon {
+  width: 12px;
+}
+.clear {
+  clear: both;
+}
+.nowloading {
+  background-image: url('/image/5.gif');
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* ::-webkit-scrollbar {
+    height: 16px;
+    width: 10px;
+    background-color: #F1F1F1;
+    border-left: solid 1px #ddd;
+    border-right: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,.2);
+    min-height: 28px;
+    padding-top: 100px
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0,.3)
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0,0,0,.5)
+}
+
+::-webkit-scrollbar-track:active,::-webkit-scrollbar-track:hover {
+    background-color: rgba(0,0,0,.1)
+} */

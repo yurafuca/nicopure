@@ -1,0 +1,312 @@
+html {
+	height:100%;
+}
+body {
+	margin: 0;
+	font: 13px / 1.4 Helvetica, Meiryo, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	overflow: hidden !important;
+	color: #222;
+	border: solid 1px #ddd;
+}
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: url(../fonts/MaterialIcons-Regular.eot); 
+	src: local('Material Icons'),
+	local('MaterialIcons-Regular'),
+	url(../fonts/MaterialIcons-Regular.woff2) format('woff2'),
+	url(../fonts/MaterialIcons-Regular.woff) format('woff'),
+	url(../fonts/MaterialIcons-Regular.ttf) format('truetype');
+}
+.octicon {
+	width: 16px;
+	text-align: center;
+}
+#menu {
+	float: left;
+	width: 185px;
+	height: 100%;
+	overflow: hidden;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    
+}
+#header {
+	background-color: white;
+	background: linear-gradient( to bottom, #4f4f4f, #4f4f4f 50%, #444 50%, #444 );
+	color: white;
+    line-height: 43px;
+    height: 42px;
+    font-weight: bold;
+    
+    padding-left: 10px;
+	border-bottom: 1px solid #eee;
+	display: none;
+	font-weight: bold;
+	font-size: 15px;
+	padding-left: 13px;
+	 
+}
+#header:before {
+	content: "";
+	background-image: url('../image/16.png');
+	background-size: 19px;
+	font-size: 19px;
+	float:left;
+	width: 19px;
+	height: 19px;
+	background-repeat: no-repeat;
+	position: relative;
+	top: 11px;
+	left: -1px;
+	margin-right: 5px;
+}
+#mylistgroup {
+	overflow: auto;
+	height: 100%;
+}
+.mylist {
+	background-color: white;
+	padding-top: 	10px;
+	padding-bottom: 9px;
+	padding-left:	9px;
+	cursor: pointer;
+	border-bottom: solid 1px #ececec;
+	color: #111;
+	color: #222;
+	font-size: 100%;
+}
+.mylist:before {
+	font-family: 'Material Icons';
+	content: "";
+	background-image: url('../image/yellow-folder.png');
+	background-size: 16px;
+	font-size: 19px;
+	float:left;
+	width: 16px;
+	height: 16px;
+	margin-right: 9px;
+	position: relative;
+	background-repeat: no-repeat;
+}
+.mylist:hover {
+	background-color: #F7F7F7;
+}
+.mylist:active {
+	background-color: #EEEEEE;
+}
+.mylist .id {
+	display: none;
+}
+#mainview {
+}
+#mylistitem {
+	overflow-x: auto;
+	overflow-y: scroll; 
+	height: 546px;
+	background-color: #F5F8FA;
+	box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.07);
+    text-shadow: 0 1px 0 #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.20);
+	padding-top: 10px;
+	padding-left: 5px;
+}
+.logoback {
+	background-image: url('../image/ff.png');
+	background-size: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#mylistheader {
+	background-color: #3E50B4;
+	font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Meiryo, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	border-left: 0;
+	padding-left: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+	position: relative;
+	z-index: 999;
+}
+#headericon{
+}
+#mylisttitle {
+	display: inline;
+	font-weight: bold;
+	font-size: 15px;
+	margin-left: 13px;
+	color: white;
+	line-height: 42px;
+    position: relative;
+    
+	 
+}
+#mylisttitle:before {
+	content: "";
+	background-image: url('../image/ic_collections_bookmark_white_48dp_2x.png');
+	background-size: 23px;
+	font-size: 19px;
+	float:left;
+	width: 23px;
+	height: 23px;
+	background-repeat: no-repeat;
+	position: relative;
+	top: 10px;
+	left: 7px;
+	margin-right: 5px;
+}
+#play {
+	display: inline;
+	display: none;
+	width: 200px;
+	height: 25px;
+    position: absolute;
+    right: 20px;
+    top: 9px;
+	cursor: pointer;
+	text-align: center;
+	background: linear-gradient(#fcfcfc, #eee);
+    
+    border: solid 1px #ccc;
+}
+#play:after {
+	content: '連続再生する';
+	color: #333;
+	font-weight: bold;
+	position: relative;
+	top: 4px;
+	text-shadow: 0 1px 0 white;
+}
+#play:hover {
+	background-image: linear-gradient(#eee, #ddd);
+}
+#play:active {
+	background-color: #dcdcdc;
+	box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.20);
+}
+.video {
+	background-color: white;
+	border: solid 1px #ddd;
+	width: 160px;
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 10px;
+	margin-bottom: 10px;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+.video:hover {
+}
+.video_length {
+	position: absolute;
+    bottom: 2px;
+    right: 2px;
+    text-shadow: 0 0 0;
+    color: #fefefe;
+    font-size: 12px;
+    padding: 1px 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    
+    
+    
+    font-weight: normal;
+    
+}
+.thumbnail {
+	width:			 160px;
+	height:			 90px;
+	background-color: black;
+	background-repeat: no-repeat;
+	position: relative;
+}
+.thumbnail.classic {
+	background-size: contain;
+	background-position: top center;
+}
+.thumbnail.medium {
+	background-size: contain;
+	background-position: top center;
+}
+.thumbnail.letterbox {
+	background-size: cover;
+	background-position: center center;
+}
+.thumbnail:hover {
+	-webkit-filter: brightness(0.85);
+}
+.info {
+	position: relative;
+	vertical-align: middle;
+}
+.title {
+	font-weight: bold;
+	margin: 5px;
+	margin-top: 5px;
+	height: 54px;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	color: #4078c0;
+}
+.title .playurl {
+	color: #4078c0;
+	text-decoration: none;
+}
+.title .playurl:hover {
+	color: #4078c0;
+	text-decoration: underline;
+}
+.count {
+	padding: 5px;
+	margin: 0;
+	color: #888;
+	font-size: 12px;
+	border-top: solid 1px #ececec;
+	background-color: #FAFAFA;
+	border-radius: 0 0 3px 3px;
+	overflow: hidden;
+	font-size: 8px;
+}
+dl {
+	float: left;
+	margin: 0;
+	padding: 0;
+    
+    white-space: nowrap;
+	width: 49px;
+}
+dt {
+	overflow: hidden;
+	color: #999;
+}
+dd {
+	margin: 0;
+	padding: 0;
+	font-weight: bold;
+}
+.octicon {
+	width: 12px;
+}
+.upload_time {
+	color: #888;
+	font-size: 11px;
+	margin-top: 3px;
+}
+.clear {
+	clear: both;
+}
+.nowloading {
+	background-image: url('/image/loading.gif');
+	background-size: 65px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+::-webkit-scrollbar {
+	width: 9px;
+	background: #eee; 
+}
+::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,0.2);
+	border-top: 1px solid rgba(0,0,0,0.1);
+	border-bottom: 1px solid rgba(0,0,0,0.07);
+	border-left: 1px solid rgba(0,0,0,0.1);
+}
