@@ -13,13 +13,22 @@ observer.listen();
 
 // chrome.runtime.onInstalled.addListener(function(details) {
 //   if (details.reason == 'update') {
-//     store.set('last.mylist', null);
-//     store.set('last.video', null);
-//     store.set('last.volume', null);
-//     store.set('last.query', null);
-//     store.set('last.candidates', null);
-//     store.set('last.playlist', null);
-//     store.set('playlists', {});
-//     store.set('playlists.noname', {});
-//   }
+// store.set('last.mylist', null);
+// store.set('last.video', null);
+// store.set('last.volume', null);
+// store.set('last.query', null);
+// store.set('last.candidates', null);
+// store.set('last.playlist', null);
+// store.set('playlists', {});
+// store.set('playlists.noname', {});
+
+store.set('player.current', {});
+store.set('player.title', '');
+store.set('player.state', {
+  play: 'PAUSE',
+  loop: 'ONE_LOOP',
+  shuffle: 'NO_SHUFFLE'
+});
+// store.set('player.state', "PAUSE");
+// }
 // });

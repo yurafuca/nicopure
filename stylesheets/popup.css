@@ -117,7 +117,8 @@ section:last-child {
   border-right: none;
 }
 
-section > .title {
+section > .title,
+#playlist > .title {
   text-align: center;
   font-weight: 500;
   background-color: #fcfcfc;
@@ -127,7 +128,8 @@ section > .title {
   border-bottom: 1px solid #e5e5e5;
 }
 
-section > .title .circle {
+section > .title .circle,
+#playlist > .title .circle {
   width: 10px;
   height: 10px;
   display: inline-block;
@@ -143,7 +145,7 @@ section#candidates > .title .circle {
   background-color: #ffb060;
 }
 
-section#panel > .title .circle {
+div#playlist > .title .circle {
   background-color: #ff5954;
 }
 
@@ -218,14 +220,14 @@ section > .footer .icon-wrapper.new .icon {
 }
 
 #controller .loop.one-loop {
-  background-image: url(../image/ic_repeat_one_black_48px.svg);
+  background-image: url(../image/ic_repeat_one_accent_48px.svg);
 }
 #controller .loop.all-loop {
-  background-image: url(../image/ic_repeat_one_black_48px.svg);
+  background-image: url(../image/ic_repeat_accent_48px.svg);
 }
 
 #controller .loop.no-loop {
-  background-image: url(../image/ic_repeat_one_black_48px.svg);
+  background-image: url(../image/ic_repeat_black_48px.svg);
 }
 
 #controller .prev {
@@ -245,7 +247,7 @@ section > .footer .icon-wrapper.new .icon {
 }
 
 #controller .shuffle.is-shuffle {
-  background-image: url(../image/ic_shuffle_black_48px.svg);
+  background-image: url(../image/ic_shuffle_accent_48px.svg);
 }
 
 #controller .shuffle.no-shuffle {

@@ -14,30 +14,51 @@ export default class Api {
  */
 class NicoVideo {
   constructor() {
-    this.url = `http://flapi.nicovideo.jp/api/getflv`;
+    this.url = `http://www.nicovideo.jp/watch`;
   }
 
   fetch(id) {
-    return axios.get(`http://www.nicovideo.jp/watch/${id}`).then(() => {
-      const req = axios.get(this.url, {
-        params: {
-          v: id,
-          as3: id.startsWith('nm') ? 1 : 0
+    return axios
+      .get(`${this.url}/${id}`)
+      .then(res => {
+        const data = res.data;
+        const node = document.createElement('div');
+        node.innerHTML = data;
+        if (node.querySelector('#watchAPIDataContainer')) {
+          const url = this._parseFlashPage(node);
+          return url;
+        } else {
+          const url = this._parseHtml5Page(node);
+          return url;
         }
+      })
+      .catch(err => {
+        throw err;
       });
-      return req
-        .then(res => {
-          const values = QueryString.parse(res.data);
-          if (values.error) {
-            throw values.error;
-          } else {
-            return values.url;
-          }
-        })
-        .catch(err => {
-          throw err;
-        });
-    });
+  }
+
+  _parseFlashPage(node) {
+    const apiDataNode = node.querySelector('#watchAPIDataContainer');
+    const apiData = JSON.parse(apiDataNode.textContent);
+    const flvInfo = apiData.flashvars.flvInfo;
+    const params = {};
+    decodeURIComponent(flvInfo)
+      .split('&')
+      .forEach(item => {
+        const sp = item.split('=');
+        const key = decodeURIComponent(sp[0]);
+        const val = decodeURIComponent(sp.slice(1).join('='));
+        params[key] = val;
+      });
+    const url = params.url;
+    return url;
+  }
+
+  _parseHtml5Page(node) {
+    const watchData = node.querySelector('#js-initial-watch-data');
+    const apiData = JSON.parse(watchData.getAttribute('data-api-data'));
+    const url = apiData.video.smileInfo.url;
+    return url;
   }
 }
 

@@ -7,7 +7,7 @@ export default class Backplayer {
   }
 
   current() {
-    const duration = this.v.duration;
+    const duration = this.v.duration || 0;
     const durationSeconds = Math.floor(duration % 60);
     const durationMinutes = Math.floor((duration / 60) % 60);
     const durationString = durationMinutes + ':' + ('0' + durationSeconds).slice(-2);
@@ -53,7 +53,13 @@ export default class Backplayer {
     this.seek(0);
   }
 
-  next() {}
+  loopon() {
+    this.v.loop = true;
+  }
+
+  loopoff() {
+    this.v.loop = false;
+  }
 
   volumeup(amount) {
     this.v += amount;

@@ -29,16 +29,6 @@ export default class View {
         this.beginTimeNode.textContent = current.currentTimeString;
         this.endTimeNode.textContent = current.durationString;
         this.titleNode.textContent = current.title;
-
-        clearInterval(interval);
-        interval = setInterval(() => {
-          const nextTime = parseInt(this.slider.value) + 1;
-          const nextTimeSeconds = Math.floor(nextTime % 60);
-          const nextTimeMinutes = Math.floor((nextTime / 60) % 60);
-          const nextTimeString = nextTimeMinutes + ':' + ('0' + nextTimeSeconds).slice(-2);
-          this.beginTimeNode.textContent = nextTimeString;
-          this.slider.value = nextTime;
-        }, 1000);
       }
     );
 
@@ -51,6 +41,18 @@ export default class View {
         this.setPlay(state.play);
         this.setLoop(state.loop);
         this.setShuffle(state.shuffle);
+
+        if (state.play === PLAY_STATUS.PLAY) {
+          clearInterval(interval);
+          interval = setInterval(() => {
+            const nextTime = parseInt(this.slider.value) + 1;
+            const nextTimeSeconds = Math.floor(nextTime % 60);
+            const nextTimeMinutes = Math.floor((nextTime / 60) % 60);
+            const nextTimeString = nextTimeMinutes + ':' + ('0' + nextTimeSeconds).slice(-2);
+            this.beginTimeNode.textContent = nextTimeString;
+            this.slider.value = nextTime;
+          }, 1000);
+        }
       }
     );
 

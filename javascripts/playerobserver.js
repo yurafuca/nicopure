@@ -33,8 +33,11 @@ export default class PlayerObserver {
         case 'replay':
           this.player.replay();
           break;
-        case 'next':
-          this.player.next();
+        case 'loopon':
+          this.player.loopon();
+          break;
+        case 'loopoff':
+          this.player.loopoff();
           break;
         case 'volumeup':
           this.player.volumeup(amount);
