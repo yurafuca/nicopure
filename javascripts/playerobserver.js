@@ -6,10 +6,6 @@ export default class PlayerObserver {
 
   listen() {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      if (request.type !== this.type) {
-        sendResponse({ error: 'Wrong type' });
-      }
-
       const { title, src, time, amount } = request;
 
       switch (request.op) {
@@ -19,17 +15,8 @@ export default class PlayerObserver {
         case 'status':
           sendResponse(this.player.status());
           break;
-        case 'title':
-          this.player.title(title);
-          break;
         case 'src':
           this.player.src(src, () => {
-            sendResponse(this.player.current());
-          });
-          break;
-        case 'autoplay':
-          this.player.autoplay(src, () => {
-            this.player.play();
             sendResponse(this.player.current());
           });
           break;

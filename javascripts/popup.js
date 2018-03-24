@@ -22,11 +22,13 @@ const modalText = modal.querySelector('.text');
 const modalInput = modal.querySelector('input');
 
 const list = playlist.currentList();
-list.forEach(i => {
-  const node = playlist.parseObject(i);
-  playlist._setOnClick(node, i);
-  playlist.append(node);
-});
+if (list) {
+  list.forEach(i => {
+    const node = playlist.parseObject(i);
+    playlist._setOnClick(node, i);
+    playlist.append(node);
+  });
+}
 
 const toriaezu = mylists.toriaezu();
 mylists._setOnClick(toriaezu, candidates);

@@ -1,31 +1,9 @@
-export const PLAY_STATUS = {
-  PLAY: 'PLAY',
-  PAUSE: 'PAUSE'
-};
-
-export const LOOP_STATUS = {
-  ONE_LOOP: 'LOOP_ONE',
-  ALL_LOOP: 'LOOP_ALL',
-  NO_LOOP: 'NO_LOOP'
-};
-
-export const SHUFFLE_STATUS = {
-  SHUFFLE: 'SHUFFLE',
-  NO_SHUFFLE: 'NO_SHUFFLE'
-};
-
 export default class Backplayer {
   constructor() {
-    this._title = '';
-    this._status = {
-      play: PLAY_STATUS.PAUSE,
-      loop: PLAY_STATUS.ONE_LOOP,
-      SHUFFLE: PLAY_STATUS.NO_SHUFFLE
-    };
     this.v = document.createElement('video');
     this.v.autoplay = true;
     this.v.loop = true;
-    this.v.volume = 0;
+    // this.v.volume = 0;
   }
 
   current() {
@@ -40,7 +18,6 @@ export default class Backplayer {
     const currentTimeString = currentTimeMinutes + ':' + ('0' + currentTimeSeconds).slice(-2);
 
     return {
-      title: this._title,
       duration: this.v.duration,
       durationString: durationString,
       currentTime: this.v.currentTime,
@@ -55,17 +32,6 @@ export default class Backplayer {
   src(src, callback) {
     this.v.src = src;
     this.v.onloadedmetadata = () => callback();
-  }
-
-  title(title) {
-    this._title = title;
-  }
-
-  autoplay(src, callback) {
-    this.src(src, () => {
-      this.play();
-      callback();
-    });
   }
 
   // https://stackoverflow.com/questions/10461669/seek-to-a-point-in-html5-video

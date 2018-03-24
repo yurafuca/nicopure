@@ -1,8 +1,6 @@
-import store from 'store';
 import Api from './api';
 
 const api = new Api();
-let interval = null;
 
 export default class Videos {
   elem() {
@@ -143,9 +141,10 @@ export default class Videos {
       api.video.fetch(id).then(url => {
         player.title(title);
         player.autoplay(url);
-      });
 
-      store.set('last.video', id);
+        // dispatch 使ったほうがいい
+        document.querySelector('#player .title').textContent = title;
+      });
     });
   }
 }

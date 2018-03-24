@@ -217,7 +217,14 @@ section > .footer .icon-wrapper.new .icon {
   cursor: pointer;
 }
 
-#controller .repeat {
+#controller .loop.one-loop {
+  background-image: url(../image/ic_repeat_one_black_48px.svg);
+}
+#controller .loop.all-loop {
+  background-image: url(../image/ic_repeat_one_black_48px.svg);
+}
+
+#controller .loop.no-loop {
   background-image: url(../image/ic_repeat_one_black_48px.svg);
 }
 
@@ -225,18 +232,23 @@ section > .footer .icon-wrapper.new .icon {
   background-image: url(../image/ic_skip_previous_black_48px.svg);
 }
 
-#controller .play {
+#controller .play.is-pause {
   background-image: url(../image/ic_play_arrow_black_48px.svg);
 }
 
-#controller .pause {
+#controller .play.is-play {
   background-image: url(../image/ic_pause_black_48px.svg);
 }
 
 #controller .next {
   background-image: url(../image/ic_skip_next_black_48px.svg);
 }
-#controller .shuffle {
+
+#controller .shuffle.is-shuffle {
+  background-image: url(../image/ic_shuffle_black_48px.svg);
+}
+
+#controller .shuffle.no-shuffle {
   background-image: url(../image/ic_shuffle_black_48px.svg);
 }
 
