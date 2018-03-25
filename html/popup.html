@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/modal.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/buttons.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/select.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/tooltip.css">
 	<link rel="stylesheet" type="text/css" href="/fonts/octicons-5.0.1/lib/octicons.css">
 </head>
 
@@ -51,30 +52,34 @@
 				<div class="circle"></div>マイリスト</div>
 			<div class="items"></div>
 			<div class="footer">
-				<div class="icon-wrapper playlist">
+				<!-- <div class="icon-wrapper playlist">
 					<div class="icon"></div>
 					<span class="text">プレイリストを表示</span>
 				</div>
 				<div class="icon-wrapper mylist none">
 					<div class="icon"></div>
 					<span class="text">マイリストを表示</span>
-				</div>
+				</div> -->
 			</div>
 		</section>
 		<section id="candidates">
 			<div class="title">
 				<div class="circle"></div>マイリストの動画・検索結果</div>
+
 			<div class="items"></div>
 			<div class="footer">
 				<div class="icon-wrapper all">
 					<div class="icon"></div>すべて再生
 				</div>
+				<div class="icon-wrapper new">
+					<div class="icon"></div>マイリストを作成
+				</div>
 			</div>
+
 		</section>
 		<section id="panel">
 			<div id="player">
 				<div class="title">動画を選択してください
-					<!-- <span class="add">a</span> -->
 				</div>
 				<div class="slider_container">
 					<input type="range" min="0" max="100" value="0" step="0.5" class="slider" id="slider">
@@ -92,9 +97,7 @@
 			</div>
 			<div class="footer">
 				<div class="icon-wrapper save">
-					<div class="icon"></div>名前をつけてリストを保存</div>
-				<div class="icon-wrapper new">
-					<div class="icon"></div>新規作成</div>
+					<div class="icon"></div>リストをクリア</div>
 			</div>
 		</section>
 	</div>
@@ -109,8 +112,9 @@
 
 
 	</div>
+	<script src="/javascripts/popper.min.js"></script>
+	<script src="/javascripts/tooltip.min.js"></script>
 	<script src="/javascripts/popup.js"></script>
-
 </body>
 
 <!--  -->

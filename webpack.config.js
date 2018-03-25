@@ -33,6 +33,8 @@ module.exports = [
       new ExtractTextPlugin("[name].css"),
       new CopyWebpackPlugin([
         { from: "html", to: "../html" },
+        { from: "javascripts/popper.min.js", to: "../javascripts/popper.min.js" },
+        { from: "javascripts/tooltip.min.js", to: "../javascripts/tooltip.min.js" },
         // {
           // from: "src/javascripts/popper.min.js",
           // to: "../javascripts/popper.min.js"

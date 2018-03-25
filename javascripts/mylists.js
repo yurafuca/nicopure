@@ -70,9 +70,9 @@ export default class Mylists {
         // マイリスト
         let fetch = null;
         if (id === 'toriaezu') {
-          fetch = api.mylist.fetchToriaezu(id);
+          fetch = api.toriaezu.list();
         } else {
-          fetch = api.mylist.fetchMylist(id);
+          fetch = api.mylist.list(id);
         }
 
         fetch.then(mylists => {

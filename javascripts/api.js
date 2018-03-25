@@ -5,7 +5,33 @@ export default class Api {
   constructor() {
     this.video = new NicoVideo();
     this.mylist = new NicoMylist();
+    this.toriaezu = new NicoToriaezu();
+    this.mylistGroup = new NicoMylistGroup();
     this.web = new Web();
+  }
+
+  token() {
+    return axios
+      .get(`http://www.nicovideo.jp/watch/sm9`)
+      .then(res => {
+        const data = res.data;
+        const node = document.createElement('div');
+        node.innerHTML = data;
+        if (node.querySelector('#watchAPIDataContainer')) {
+          const apiDataNode = node.querySelector('#watchAPIDataContainer');
+          const apiData = JSON.parse(apiDataNode.textContent);
+          const token = apiData.flashvars.csrfToken;
+          return token;
+        } else {
+          const watchData = node.querySelector('#js-initial-watch-data');
+          const apiData = JSON.parse(watchData.getAttribute('data-api-data'));
+          const token = apiData.context.csrfToken;
+          return token;
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
   }
 }
 
@@ -67,52 +93,176 @@ class NicoVideo {
  */
 class NicoMylist {
   constructor() {
-    this.groupUrl = `http://www.nicovideo.jp/api/mylistgroup/list`;
-    this.mylistUrl = `http://www.nicovideo.jp/api/mylist/list`;
-    this.toriaezuUrl = `http://www.nicovideo.jp/api/deflist/list`;
+    this.url = `http://www.nicovideo.jp/api/mylist/`;
   }
 
-  fetchGroup() {
-    const req = axios.get(this.groupUrl);
+  list(id) {
+    const req = axios.get(`${this.url}/list`, {
+      params: {
+        item_type: 0,
+        group_id: id
+      }
+    });
+    return req
+      .then(res => {
+        if (res.data.status === 'ok') {
+          return Promise.resolve(res.data.mylistitem);
+        } else {
+          return new Error('Request failed:', req);
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
+
+  add(id) {
+    return api.token().then(token => {
+      const req = axios.get(`${this.url}/add`, {
+        params: {
+          item_type: 0,
+          token: token,
+          item_id: id
+        }
+      });
+      return req
+        .then(res => {
+          if (res.data.status === 'ok') {
+            return res;
+          }
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  }
+
+  remove(id) {
+    return api.token().then(token => {
+      return api.toriaezu.search(id).then(item => {
+        const params = [];
+        params.push(`?item_type=0`);
+        params.push(`&token=${token}`);
+        params.push(`&id_list[0][]=${item.item_id}`);
+        const req = axios.post(`${this.url}/delete${params.join('')}`);
+        return req
+          .then(res => {
+            if (res.data.status === 'ok') {
+              return true;
+            }
+          })
+          .catch(err => {
+            throw err;
+          });
+      });
+    });
+  }
+
+  // 動画の id からマイリストの id を取得する
+  search(id) {
+    return api.toriaezu.list().then(list => {
+      for (let i = 0; i < list.length; i++) {
+        const item = list[i];
+        if (item.item_data.watch_id == id) {
+          return item;
+        }
+      }
+      return Promise.reject();
+    });
+  }
+}
+
+class NicoToriaezu {
+  constructor() {
+    this.url = `http://www.nicovideo.jp/api/deflist`;
+  }
+
+  list() {
+    const req = axios.get(`${this.url}/list`, {
+      params: {
+        item_type: 0
+      }
+    });
+    return req
+      .then(res => {
+        if (res.data.status === 'ok') {
+          return res.data.mylistitem;
+        } else {
+          return new Error('Request failed:', req);
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
+
+  add(id) {
+    return api.token().then(token => {
+      const req = axios.get(`${this.url}/add`, {
+        params: {
+          item_type: 0,
+          token: token,
+          item_id: id
+        }
+      });
+      return req
+        .then(res => {
+          if (res.data.status === 'ok') {
+            return true;
+          }
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  }
+
+  remove(id) {
+    return api.token().then(token => {
+      return api.toriaezu.search(id).then(item => {
+        const params = [];
+        params.push(`?item_type=0`);
+        params.push(`&token=${token}`);
+        params.push(`&id_list[0][]=${item.item_id}`);
+        const req = axios.post(`${this.url}/delete${params.join('')}`);
+        return req
+          .then(res => {
+            if (res.data.status === 'ok') {
+              return true;
+            }
+          })
+          .catch(err => {
+            throw err;
+          });
+      });
+    });
+  }
+
+  // 動画の id からマイリストの id を取得する
+  search(id) {
+    return api.toriaezu.list().then(list => {
+      for (let i = 0; i < list.length; i++) {
+        const item = list[i];
+        if (item.item_data.watch_id == id) {
+          return item;
+        }
+      }
+      return Promise.reject();
+    });
+  }
+}
+
+class NicoMylistGroup {
+  constructor() {
+    this.url = `http://www.nicovideo.jp/api/mylistgroup/list`;
+  }
+
+  list() {
+    const req = axios.get(this.url);
     return req
       .then(res => {
         if (res.data.status === 'ok') {
           return res.data.mylistgroup;
-        } else {
-          return new Error('Request failed:', req);
-        }
-      })
-      .catch(err => {
-        throw err;
-      });
-  }
-
-  fetchMylist(id) {
-    const req = axios.get(this.mylistUrl, {
-      params: {
-        group_id: id
-      }
-    });
-
-    return req
-      .then(res => {
-        if (res.data.status === 'ok') {
-          return res.data.mylistitem;
-        } else {
-          return new Error('Request failed:', req);
-        }
-      })
-      .catch(err => {
-        throw err;
-      });
-  }
-
-  fetchToriaezu() {
-    const req = axios.get(this.toriaezuUrl);
-    return req
-      .then(res => {
-        if (res.data.status === 'ok') {
-          return res.data.mylistitem;
         } else {
           return new Error('Request failed:', req);
         }
@@ -170,3 +320,9 @@ class Web {
       });
   }
 }
+
+const api = new Api();
+
+// class Token {
+
+// }

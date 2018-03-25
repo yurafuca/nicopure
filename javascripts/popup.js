@@ -34,7 +34,7 @@ const toriaezu = mylists.toriaezu();
 mylists._setOnClick(toriaezu, candidates);
 mylists.append(toriaezu);
 
-api.mylist.fetchGroup().then(group => {
+api.mylistGroup.list().then(group => {
   group.forEach(mylist => {
     const node = mylists.parseNode(mylist);
     mylists._setOnClick(node, candidates);
@@ -49,7 +49,7 @@ document.querySelector('.footer .save').addEventListener('click', () => {
 });
 
 // 削除
-document.querySelector('.footer .clear').addEventListener('click', () => {
+document.querySelector('.footer .new').addEventListener('click', () => {
   playlist.clear();
   playlist.destroy();
 });
@@ -85,7 +85,7 @@ document.querySelector('.icon-wrapper.mylist').addEventListener('click', e => {
   document.querySelector('.icon-wrapper.playlist').classList.remove('none');
   e.currentTarget.classList.add('none');
   mylists.clear();
-  api.mylist.fetchGroup().then(group => {
+  api.mylistGroup.list().then(group => {
     group.forEach(mylist => {
       const node = mylists.parseNode(mylist);
       mylists._setOnClick(node, candidates);

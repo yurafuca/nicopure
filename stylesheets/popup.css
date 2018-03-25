@@ -34,6 +34,10 @@ body {
   display: none !important;
 }
 
+.hidden {
+  visibility: hidden !important;
+}
+
 .radius-left {
   border-radius: 3px 0 0 3px !important;
 }
@@ -150,11 +154,14 @@ div#playlist > .title .circle {
 }
 
 section > .footer {
-  background-color: #fcfcfc;
+  background-color: #f5f5f5;
   font-weight: 500;
   height: 20px;
   display: flex;
   padding: 3px 0px;
+  /* border-top: 1px solid #e5e5e5;
+  color: #0366d6;
+  font-size: 12px; */
 }
 
 section > .footer .icon-wrapper {
@@ -255,13 +262,14 @@ section > .footer .icon-wrapper.new .icon {
 }
 
 .items {
-  border-bottom: 1px solid #e5e5e5;
   overflow-y: scroll;
+  /* overflow-x: visible; */
 }
 
 #mylists .items,
 #candidates .items {
   height: 501px;
+  /* overflow: visible; */
   /* overflow: auto; */
 }
 
@@ -397,6 +405,7 @@ section > .footer .icon-wrapper.new .icon {
   box-shadow: 0 1px 4px rgba(27, 31, 35, 0.15);
 
   transition: transform 0.05s ease-in-out;
+  margin-right: 10px;
 
   /* box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); */
 }
@@ -405,13 +414,9 @@ section > .footer .icon-wrapper.new .icon {
   transform: scale(1.3, 1.3);
 }
 
-.video .buttons.hidden {
-  display: none;
-}
-
-.video .buttons .button {
-  margin-right: 10px;
-}
+/* .video .buttons .button:last-child {
+  margin-right: 30px;
+} */
 
 .video .buttons .button.play {
   background-image: url(../image/ic_play_arrow_black_48px.svg);
@@ -423,6 +428,16 @@ section > .footer .icon-wrapper.new .icon {
 
 .video .buttons .button.removequeue {
   background-image: url(../image/ic_remove_white_18px.svg);
+}
+
+.video .buttons .button.addmylist {
+  background-size: 16px;
+  background-image: url(../image/ic_star_rate_white_18px.svg);
+}
+
+.video .buttons .button.removemylist {
+  background-size: 14px;
+  background-image: url(../image/ic_star_border_white_18px.svg);
 }
 
 .video .buttons .button.newtab {

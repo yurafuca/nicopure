@@ -115,11 +115,15 @@ export default class Playlist {
     node.addEventListener('mouseleave', () => {
       node.querySelector('.buttons .removequeue').classList.toggle('none');
       node.querySelector('.buttons .newtab').classList.toggle('none');
+      node.querySelector('.buttons .addmylist').classList.toggle('none');
+      node.querySelector('.buttons .removemylist').classList.toggle('none');
     });
 
     node.addEventListener('mouseenter', () => {
       node.querySelector('.buttons .removequeue').classList.toggle('none');
       node.querySelector('.buttons .newtab').classList.toggle('none');
+      node.querySelector('.buttons .addmylist').classList.toggle('none');
+      node.querySelector('.buttons .removemylist').classList.toggle('none');
     });
 
     const queue = node.querySelector('.buttons .removequeue');

@@ -1,4 +1,5 @@
 import Api from './api';
+// import Tooltip from './tooltip';
 
 const api = new Api();
 
@@ -29,9 +30,11 @@ export default class Videos {
                 </div>
             </div>
             <div class="buttons">
-                <div class="button addqueue none"></div>
-                <div class="button removequeue none"></div>
-                <div class="button newtab none"></div>
+                <div class="button addqueue none" data-tooltip-text="再生リストに追加"></div>
+                <div class="button removequeue none" data-tooltip-text="再生リストから削除"></div>
+                <div class="button addmylist none" data-tooltip-text="マイリストに追加"></div>
+                <div class="button removemylist none" data-tooltip-text="マイリストから削除"></div>
+                <div class="button newtab none" data-tooltip-text="新しいタブで開く"></div>
             </div>
             <div class="id none"></div>
             <div class="raw_duration none"></div>
@@ -130,7 +133,37 @@ export default class Videos {
     doc.querySelector('.raw_duration').textContent = rawDuration;
     doc.querySelector('.url').textContent = url;
 
+    [...doc.querySelectorAll('.button')].forEach(node => {
+      this.setTooltip(node, node.dataset.tooltipText, '#candidates');
+    });
+
     return doc;
+  }
+
+  setTooltip(node, text, boundaries) {
+    const modefier = data => {
+      const tooltip = data.instance.popper;
+      const top = parseInt(tooltip.style.top) || 0;
+      tooltip.style.top = `${top - 3}px`;
+    };
+
+    new Tooltip(node, {
+      placement: 'top',
+      title: text,
+      container: document.querySelector('body'),
+      popperOptions: {
+        onCreate: modefier,
+        onUpdate: modefier,
+        modifiers: {
+          flip: {
+            enabled: false
+          },
+          preventOverflow: {
+            boundariesElement: document.querySelector(boundaries)
+          }
+        }
+      }
+    });
   }
 
   _setOnClick(doc, player) {
