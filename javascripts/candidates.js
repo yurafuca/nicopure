@@ -1,30 +1,19 @@
-import store from 'store';
+const _e = document.querySelector('#candidates .items');
 
 export default class Candidates {
-  constructor(player, VideoClass, playlist) {
-    this.element = document.querySelector('#candidates .items');
-    this.player = player;
-    this.video = new VideoClass();
-    this.playlist = playlist;
+  static append(video) {
+    const emptyMessage = _e.querySelector('.empty');
+
+    if (emptyMessage) {
+      emptyMessage.remove();
+    }
+
+    _e.appendChild(video.element);
+    Candidates.setEvent(video);
   }
 
-  parseNode(video, fromWebSearch) {
-    const object = this.video.toObject(video, fromWebSearch);
-    return object;
-  }
-
-  parseObject(object) {
-    const node = this.video.toElement(object);
-    return node;
-  }
-
-  append(node) {
-    this.element.appendChild(node);
-  }
-
-  _setOnClick(node, object) {
-    this.video._setOnClick(node, this.player);
-
+  static setEvent(video) {
+    const node = video.element;
     node.addEventListener('mouseleave', () => {
       node.querySelector('.buttons .addqueue').classList.toggle('none');
       node.querySelector('.buttons .newtab').classList.toggle('none');
@@ -38,23 +27,14 @@ export default class Candidates {
       node.querySelector('.buttons .addmylist').classList.toggle('none');
       node.querySelector('.buttons .removemylist').classList.toggle('none');
     });
-
-    const queue = node.querySelector('.buttons .addqueue');
-    queue.addEventListener('click', e => {
-      e.stopPropagation();
-      const clone = node.cloneNode(true);
-      const buttons = clone.querySelectorAll('.button');
-      [...buttons].forEach(node => {
-        node.classList.add('none');
-        this.video.setTooltip(node, node.dataset.tooltipText, '#playlists');
-      });
-      this.playlist._setOnClick(clone, object);
-      this.playlist.append(clone);
-      this.playlist.regist(object);
-    });
   }
 
-  clear() {
-    this.element.innerHTML = '';
+  static clear() {
+    _e.innerHTML = '';
+  }
+
+  static guide() {
+    _e.innerHTML =
+      '<div class="empty">アイテムがありません．<p class="small">マイリストを選択するか動画を検索してください．</p></div>';
   }
 }

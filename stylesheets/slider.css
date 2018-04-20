@@ -54,6 +54,7 @@
 } */
 
 .slider_container .times {
+  padding-top: 5px;
   color: #666;
 }
 

@@ -1,23 +1,24 @@
 {
-  "name": "にこぷれ（ニコ動バックグラウンドプレーヤー）",
-  "short_name": "おてもとマイリスト",
+  "name": "にこぷれ（ニコニコ動画プレイヤー）",
+  "short_name": "にこぷれ",
   "manifest_version": 2,
-  "version": "2.0.0",
+  "version": "0.0.1",
   "background": {
     "scripts": ["javascripts/background.js"]
   },
   "browser_action": {
     "default_icon": "image/icon.png",
-    "default_title": "マイリストを見る",
+    "default_title": "にこぷれ",
     "default_popup": "html/popup.html"
   },
-  "description": "ニコニコ動画のマイリストをポップアップ表示します．",
+  "description": "ニコニコ動画のバックグラウンドプレイヤ",
   "icons": {
     "16": "image/icon.png",
     "32": "image/icon.png",
     "64": "image/icon.png"
   },
   "permissions": [
+    "tabs",
     "https://secure.nicovideo.jp/",
     "http://live.nicovideo.jp/",
     "http://api.ce.nicovideo.jp/",

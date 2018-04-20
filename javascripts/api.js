@@ -7,6 +7,7 @@ export default class Api {
     this.mylist = new NicoMylist();
     this.toriaezu = new NicoToriaezu();
     this.mylistGroup = new NicoMylistGroup();
+    this.history = new NicoHistory();
     this.web = new Web();
   }
 
@@ -44,6 +45,12 @@ class NicoVideo {
   }
 
   fetch(id) {
+    // 接頭辞が nm の動画は swf
+    // swf は 403 が返ってくるので例外を投げる
+    if (id.startsWith('nm')) {
+      return Promise.reject('Unsupported file');
+    }
+
     return axios
       .get(`${this.url}/${id}`)
       .then(res => {
@@ -116,12 +123,13 @@ class NicoMylist {
       });
   }
 
-  add(id) {
+  add(groupId, id) {
     return api.token().then(token => {
       const req = axios.get(`${this.url}/add`, {
         params: {
           item_type: 0,
           token: token,
+          group_id: groupId,
           item_id: id
         }
       });
@@ -137,12 +145,13 @@ class NicoMylist {
     });
   }
 
-  remove(id) {
+  remove(groupId, id) {
     return api.token().then(token => {
-      return api.toriaezu.search(id).then(item => {
+      return api.mylist.search(groupId, id).then(item => {
         const params = [];
         params.push(`?item_type=0`);
         params.push(`&token=${token}`);
+        params.push(`&group_id=${groupId}`);
         params.push(`&id_list[0][]=${item.item_id}`);
         const req = axios.post(`${this.url}/delete${params.join('')}`);
         return req
@@ -159,8 +168,8 @@ class NicoMylist {
   }
 
   // 動画の id からマイリストの id を取得する
-  search(id) {
-    return api.toriaezu.list().then(list => {
+  search(groupId, id) {
+    return api.mylist.list(groupId).then(list => {
       for (let i = 0; i < list.length; i++) {
         const item = list[i];
         if (item.item_data.watch_id == id) {
@@ -178,11 +187,7 @@ class NicoToriaezu {
   }
 
   list() {
-    const req = axios.get(`${this.url}/list`, {
-      params: {
-        item_type: 0
-      }
-    });
+    const req = axios.get(`${this.url}/list`);
     return req
       .then(res => {
         if (res.data.status === 'ok') {
@@ -254,17 +259,80 @@ class NicoToriaezu {
 
 class NicoMylistGroup {
   constructor() {
-    this.url = `http://www.nicovideo.jp/api/mylistgroup/list`;
+    this.url = `http://www.nicovideo.jp/api/mylistgroup`;
   }
 
   list() {
-    const req = axios.get(this.url);
+    const req = axios.get(`${this.url}/list`);
     return req
       .then(res => {
         if (res.data.status === 'ok') {
           return res.data.mylistgroup;
         } else {
           return new Error('Request failed:', req);
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  }
+
+  add(name) {
+    return api.token().then(token => {
+      const req = axios.get(`${this.url}/add`, {
+        params: {
+          name: name,
+          token: token,
+          description: '',
+          public: 1,
+          default_sort: 1,
+          icon_id: 0
+        }
+      });
+      return req
+        .then(res => {
+          if (res.data.status === 'ok') {
+            return true;
+          }
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  }
+
+  remove(id) {
+    return api.token().then(token => {
+      const req = axios.get(`${this.url}/delete`, {
+        params: {
+          token: token,
+          group_id: id
+        }
+      });
+      return req
+        .then(res => {
+          if (res.data.status === 'ok') {
+            return true;
+          }
+        })
+        .catch(err => {
+          throw err;
+        });
+    });
+  }
+}
+
+class NicoHistory {
+  constructor() {
+    this.url = 'http://www.nicovideo.jp/api/videoviewhistory';
+  }
+
+  list() {
+    const req = axios.get(`${this.url}/list`);
+    return req
+      .then(res => {
+        if (res.data.status === 'ok') {
+          return res.data.history;
         }
       })
       .catch(err => {

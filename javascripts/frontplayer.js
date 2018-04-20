@@ -1,102 +1,163 @@
-// import { PLAY_STATUS, LOOP_STATUS, SHUFFLE_STATUS } from './backplayer';
-import Store from './playerstore';
-import View from './playerview';
+import { Store as PlayerStore } from './playerstore';
+import { Store as QueueStore } from './queuestore';
+import PlayerView from './playerview';
+import { PLAY_STATUS } from './playerstate';
 
-export default class Frontplayer {
-  constructor() {
-    this.view = new View(this);
-    this.e = document.querySelector('#slider');
-    this.titleNode = document.querySelector('#player .title');
-    this.beginTimeNode = document.querySelector('#player .begin');
-    this.endTimeNode = document.querySelector('#player .end');
+export default class FrontPlayer {
+  static state() {
+    PlayerStore.dispatch(
+      {
+        op: 'state'
+      },
+      state => {
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  current() {
-    Store.dispatch({
-      from: 'player',
-      op: 'current'
-    });
+  static src(src, video) {
+    PlayerStore.dispatch(
+      {
+        op: 'src',
+        src: src,
+        item: video
+      },
+      state => {
+        chrome.browserAction.setBadgeText({ text: '＊' });
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  status() {
-    Store.dispatch({
-      from: 'player',
-      op: 'status'
-    });
+  static seek(time) {
+    PlayerStore.dispatch(
+      {
+        op: 'seek',
+        time: time
+      },
+      state => {
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  title(title) {
-    Store.dispatch({
-      from: 'player',
-      op: 'title',
-      title: title
-    });
+  static play() {
+    PlayerStore.dispatch(
+      {
+        op: 'play'
+      },
+      state => {
+        chrome.browserAction.setBadgeText({ text: '＊' });
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  src(src, onload) {
-    Store.dispatch({
-      from: 'player',
-      op: 'src',
-      src: src,
-      onload: onload
-    });
+  static pause() {
+    PlayerStore.dispatch(
+      {
+        op: 'pause'
+      },
+      state => {
+        chrome.browserAction.setBadgeText({ text: '' });
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  autoplay(src) {
-    this.src(src, () => {
-      this.play();
-    });
+  static replay() {
+    PlayerStore.dispatch(
+      {
+        op: 'replay'
+      },
+      state => {
+        chrome.browserAction.setBadgeText({ text: '＊' });
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  seek(time) {
-    Store.dispatch({
-      from: 'player',
-      op: 'seek',
-      time: time
-    });
+  static next() {
+    PlayerStore.dispatch(
+      {
+        op: 'next'
+      },
+      state => {
+        chrome.browserAction.setBadgeText({ text: '＊' });
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  play() {
-    Store.dispatch({
-      from: 'player',
-      op: 'play'
-    });
+  static prev() {
+    PlayerStore.dispatch(
+      {
+        op: 'prev'
+      },
+      state => {
+        chrome.browserAction.setBadgeText({ text: '＊' });
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  pause() {
-    Store.dispatch({
-      from: 'player',
-      op: 'pause'
-    });
+  // TODO
+  static moveto(nextCurrentId) {
+    QueueStore.dispatch(
+      {
+        op: 'moveto',
+        nextCurrentId: nextCurrentId
+      },
+      () => {
+        PlayerStore.dispatch({ op: 'state' }, state => {
+          chrome.browserAction.setBadgeText({ text: '＊' });
+          PlayerView.renderState(state);
+        });
+      }
+    );
   }
 
-  replay() {
-    Store.dispatch({
-      from: 'player',
-      op: 'replay'
-    });
+  static togglePlay() {
+    PlayerStore.dispatch(
+      {
+        op: 'toggle',
+        from: 'viewer',
+        target: 'play'
+      },
+      state => {
+        PlayerView.renderState(state);
+        if (state.mode.play === PLAY_STATUS.PLAY) {
+          chrome.browserAction.setBadgeText({ text: '＊' });
+        } else {
+          chrome.browserAction.setBadgeText({ text: '' });
+        }
+      }
+    );
   }
 
-  next() {
-    Store.dispatch({
-      from: 'player',
-      op: 'next'
-    });
+  static toggleLoop() {
+    PlayerStore.dispatch(
+      {
+        op: 'toggle',
+        from: 'viewer',
+        target: 'loop'
+      },
+      state => {
+        PlayerView.renderState(state);
+      }
+    );
   }
 
-  volumeup(amount) {
-    Store.dispatch({
-      from: 'player',
-      op: 'volumeup',
-      amount: amount
-    });
-  }
-
-  volumedown(amount) {
-    Store.dispatch({
-      from: 'player',
-      op: 'volumedown',
-      amount: amount
-    });
+  static toggleShuffle() {
+    PlayerStore.dispatch(
+      {
+        op: 'toggle',
+        from: 'viewer',
+        target: 'shuffle'
+      },
+      state => {
+        PlayerView.renderState(state);
+      }
+    );
   }
 }

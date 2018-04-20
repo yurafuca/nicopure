@@ -1,3 +1,4 @@
+select,
 .form-select {
   font-family: 'Noto Sans Japanese';
   display: inline-block;
@@ -18,7 +19,7 @@
   line-height: 20px;
   color: #24292e;
   vertical-align: middle;
-  background-color: #fff;
+  background-color: #fcfcfc;
   background-repeat: no-repeat;
   background-position: right 8px center;
   border: 1px solid #d1d5da;
@@ -29,9 +30,10 @@
   height: 28px;
   font-size: 13px;
   padding: 0 8px;
-  width: 180px;
+  width: 150px;
 }
 
+select:focus,
 .form-control.focus,
 .form-control:focus,
 .form-select.focus,

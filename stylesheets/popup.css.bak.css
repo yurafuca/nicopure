@@ -174,7 +174,8 @@ body {
   text-shadow: 0 1px 0 #fff;
   background: #f6f8fa;
   border-bottom: solid 1px #dcdcdc;
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Meiryo, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Meiryo, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   position: relative;
   height: 25px;
   z-index: 999;
@@ -202,7 +203,8 @@ body {
 #playall-button span {
   height: 20px;
   font-weight: 500;
-  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Meiryo, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Meiryo, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   font-size: 15px;
 }
 #playall-button:hover {

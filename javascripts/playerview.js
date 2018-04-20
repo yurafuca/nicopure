@@ -1,149 +1,162 @@
-import { PLAY_STATUS, LOOP_STATUS, SHUFFLE_STATUS } from './playerstore';
-import Store from './playerstore';
+import { PLAY_STATUS, LOOP_STATUS, SHUFFLE_STATUS } from './playerstate';
+import FrontPlayer from './frontplayer';
+
 let interval = null;
 
-export default class View {
-  constructor(player) {
-    this.player = player;
-    this.slider = document.querySelector('#slider');
-    this.titleNode = document.querySelector('#player .title');
-    this.beginTimeNode = document.querySelector('#player .begin');
-    this.endTimeNode = document.querySelector('#player .end');
-    this.element = document.querySelector('#controller');
-    this.playButton = this.element.querySelector('.play');
-    this.prevButton = this.element.querySelector('.prev');
-    this.nextButton = this.element.querySelector('.next');
-    this.loopButton = this.element.querySelector('.loop');
-    this.shuffleButton = this.element.querySelector('.shuffle');
+const controllerElement = document.querySelector('#controller');
+const playButton = controllerElement.querySelector('.play');
+const prevButton = controllerElement.querySelector('.prev');
+const nextButton = controllerElement.querySelector('.next');
+const loopButton = controllerElement.querySelector('.loop');
+const shuffleButton = controllerElement.querySelector('.shuffle');
 
-    Store.dispatch(
-      {
-        op: 'current',
-        from: 'viewer'
-      },
-      current => {
-        if (current == null) return;
-        this.slider.max = current.duration;
-        this.slider.min = 0;
-        this.slider.value = current.currentTime;
-        this.beginTimeNode.textContent = current.currentTimeString;
-        this.endTimeNode.textContent = current.durationString;
-        this.titleNode.textContent = current.title;
-      }
-    );
+const sliderElement = document.querySelector('#slider');
+const titleElement = document.querySelector('#player .title');
+const beginTimeElement = document.querySelector('#player .begin');
+const endTimeElement = document.querySelector('#player .end');
 
-    Store.dispatch(
-      {
-        op: 'state',
-        from: 'viewer'
-      },
-      state => {
-        this.setPlay(state.play);
-        this.setLoop(state.loop);
-        this.setShuffle(state.shuffle);
-
-        if (state.play === PLAY_STATUS.PLAY) {
-          clearInterval(interval);
-          interval = setInterval(() => {
-            const nextTime = parseInt(this.slider.value) + 1;
-            const nextTimeSeconds = Math.floor(nextTime % 60);
-            const nextTimeMinutes = Math.floor((nextTime / 60) % 60);
-            const nextTimeString = nextTimeMinutes + ':' + ('0' + nextTimeSeconds).slice(-2);
-            this.beginTimeNode.textContent = nextTimeString;
-            this.slider.value = nextTime;
-          }, 1000);
-        }
-      }
-    );
-
-    this.setEvent();
+export default class PlayerView {
+  static init() {
+    FrontPlayer.state();
+    PlayerView.setEvent();
   }
 
-  setEvent() {
-    this.playButton.addEventListener('click', () => {
-      Store.dispatch(
-        {
-          op: 'toggle',
-          from: 'viewer',
-          target: 'play'
-        },
-        state => {
-          this.setPlay(state.play);
-        }
-      );
+  static setEvent() {
+    playButton.addEventListener('click', () => {
+      FrontPlayer.togglePlay();
     });
 
-    this.loopButton.addEventListener('click', () => {
-      Store.dispatch(
-        {
-          op: 'toggle',
-          from: 'viewer',
-          target: 'loop'
-        },
-        state => {
-          this.setLoop(state.loop);
-        }
-      );
+    loopButton.addEventListener('click', () => {
+      FrontPlayer.toggleLoop();
     });
 
-    this.shuffleButton.addEventListener('click', () => {
-      Store.dispatch(
-        {
-          op: 'toggle',
-          from: 'viewer',
-          target: 'shuffle'
-        },
-        state => {
-          this.setShuffle(state.shuffle);
-        }
-      );
+    shuffleButton.addEventListener('click', () => {
+      FrontPlayer.toggleShuffle();
     });
 
-    this.slider.addEventListener('mouseup', () => {
-      const time = this.slider.value;
-      Store.dispatch({
-        op: 'seek',
-        from: 'viewer',
-        time: time
-      });
+    nextButton.addEventListener('click', () => {
+      FrontPlayer.next();
+    });
+
+    prevButton.addEventListener('click', () => {
+      FrontPlayer.prev();
+    });
+
+    sliderElement.addEventListener('mouseup', () => {
+      const time = sliderElement.value;
+      FrontPlayer.seek(time);
     });
   }
 
-  setPlay(status, option = {}) {
-    this.playButton.className = 'play';
+  static listen() {
+    chrome.runtime.onMessage.addListener(request => {
+      const { op, state } = request;
+
+      switch (op) {
+        case 'render': {
+          PlayerView.renderState(state);
+          break;
+        }
+        default:
+          break;
+      }
+    });
+  }
+
+  static renderState(state) {
+    const { video, time, mode, action } = state;
+
+    sliderElement.max = time.duration;
+    sliderElement.min = 0;
+    sliderElement.value = time.currentTime;
+    beginTimeElement.textContent = time.currentTimeString;
+    endTimeElement.textContent = time.durationString;
+    titleElement.textContent = time.title;
+
+    if (mode.play) PlayerView.setPlay(mode.play);
+    if (mode.loop) PlayerView.setLoop(mode.loop);
+    if (mode.shuffle) PlayerView.setShuffle(mode.shuffle);
+
+    // バッジ管理
+    const videos = [...document.querySelectorAll('#playlist .video')];
+    videos.forEach(videoElement => {
+      const id = videoElement.querySelector('.id').textContent;
+
+      videoElement.classList.remove('playing');
+
+      if (id === video.id) {
+        // バッジ表示
+        videoElement.classList.add('playing');
+
+        // スクロール
+        if (action.op === 'src') {
+          videoElement.scrollIntoView(true);
+          const playlist = document.querySelector('#playlist');
+          const items = playlist.querySelector('.items');
+          items.scrollTop = items.scrollTop + 1;
+        }
+      }
+    });
+
+    titleElement.textContent = video.title ? video.title : '◀ 動画を選択してください';
+  }
+
+  static startTick() {
+    // すでに tick している場合は一度 clear する
+    clearInterval(interval);
+
+    // tick
+    interval = setInterval(() => {
+      const nextTime = parseInt(sliderElement.value) + 1;
+      const nextTimeSeconds = Math.floor(nextTime % 60);
+      const nextTimeMinutes = Math.floor((nextTime / 60) % 60);
+      const nextTimeString = nextTimeMinutes + ':' + ('0' + nextTimeSeconds).slice(-2);
+      beginTimeElement.textContent = nextTimeString;
+      sliderElement.value = nextTime;
+    }, 1000);
+  }
+
+  static pauseTick() {
+    clearInterval(interval);
+  }
+
+  static setPlay(status) {
+    playButton.className = 'play';
     switch (status) {
       case PLAY_STATUS.PLAY:
-        this.playButton.classList.add('is-play');
+        playButton.classList.add('is-play');
+        PlayerView.startTick();
         break;
       case PLAY_STATUS.PAUSE:
-        this.playButton.classList.add('is-pause');
+        playButton.classList.add('is-pause');
+        PlayerView.pauseTick();
         break;
     }
   }
 
-  setLoop(status, option = {}) {
-    this.loopButton.className = 'loop';
+  static setLoop(status) {
+    loopButton.className = 'loop';
     switch (status) {
       case LOOP_STATUS.ONE_LOOP:
-        this.loopButton.classList.add('one-loop');
+        loopButton.classList.add('one-loop');
         break;
       case LOOP_STATUS.ALL_LOOP:
-        this.loopButton.classList.add('all-loop');
+        loopButton.classList.add('all-loop');
         break;
       case LOOP_STATUS.NO_LOOP:
-        this.loopButton.classList.add('no-loop');
+        loopButton.classList.add('no-loop');
         break;
     }
   }
 
-  setShuffle(status, option = {}) {
-    this.shuffleButton.className = 'shuffle';
+  static setShuffle(status) {
+    shuffleButton.className = 'shuffle';
     switch (status) {
       case SHUFFLE_STATUS.SHUFFLE:
-        this.shuffleButton.classList.add('is-shuffle');
+        shuffleButton.classList.add('is-shuffle');
         break;
       case SHUFFLE_STATUS.NO_SHUFFLE:
-        this.shuffleButton.classList.add('no-shuffle');
+        shuffleButton.classList.add('no-shuffle');
         break;
     }
   }

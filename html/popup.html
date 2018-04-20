@@ -6,19 +6,18 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/slider.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/scrollbar.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/modal.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/toast.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/buttons.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/select.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/tooltip.css">
-	<link rel="stylesheet" type="text/css" href="/fonts/octicons-5.0.1/lib/octicons.css">
 </head>
 
 <body>
 	<header>
-		<div class="applogo"></div>
-		<div class="appname">にこぷれ</div>
-
+		<!-- <div class="applogo"></div>
+		<div class="appname">にこぷれ</div> -->
 		<div class="search-wrapper flex">
-
+			<div id="openintab" class="btn btn-sm">タブで開く</div>
 			<select class="form-select" id="search-sort" name="sort" value="">
 				<option value="mylistCounter">マイリスト数が多い順</option>
 				<option value="mylistCounterInv">マイリスト数が少ない順</option>
@@ -34,48 +33,46 @@
 			<input type="text" id="search-query" class="search-input radius-left" placeholder="ニコニコ動画から検索">
 			<div id="search-button" class="btn btn-primary btn-sm radius-right">検索</div>
 		</div>
-
-
 		<div id="controller" class="flex">
-			<div class="loop one-loop"></div>
+			<div class="volume">
+				<div class="volumebar none">
+					<input class="slider" type="range" min="0" max="1" value="1" step="0.01">
+				</div>
+			</div>
 			<div class="prev"></div>
-			<div class="play is-play"></div>
+			<div class="play is-pause"></div>
 			<div class="next"></div>
+			<div class="loop all-loop"></div>
 			<div class="shuffle no-shuffle"></div>
-
 		</div>
 	</header>
 	<div id="main" class="flex">
 		<section id="mylists">
-
 			<div class="title">
 				<div class="circle"></div>マイリスト</div>
 			<div class="items"></div>
 			<div class="footer">
-				<!-- <div class="icon-wrapper playlist">
-					<div class="icon"></div>
-					<span class="text">プレイリストを表示</span>
+				<div class="flex flex-vertical-center flex-horizontal-center radius-none width-50ptg btn btn-super-sm icon-wrapper new">
+					<div class="icon"></div>作成
 				</div>
-				<div class="icon-wrapper mylist none">
-					<div class="icon"></div>
-					<span class="text">マイリストを表示</span>
-				</div> -->
+				<div class="flex flex-vertical-center flex-horizontal-center radius-none width-50ptg btn btn-super-sm icon-wrapper remove">
+					<div class="icon"></div>削除
+				</div>
 			</div>
 		</section>
 		<section id="candidates">
 			<div class="title">
-				<div class="circle"></div>マイリストの動画・検索結果</div>
-
-			<div class="items"></div>
-			<div class="footer">
-				<div class="icon-wrapper all">
-					<div class="icon"></div>すべて再生
-				</div>
-				<div class="icon-wrapper new">
-					<div class="icon"></div>マイリストを作成
+				<div class="circle"></div>動画一覧</div>
+			<div class="items">
+				<div class="empty">アイテムがありません．
+					<p class="small">マイリストを選択するか動画を検索してください．</p>
 				</div>
 			</div>
-
+			<div class="footer">
+				<div class="flex flex-vertical-center flex-horizontal-center radius-none width-100ptg btn btn-super-sm icon-wrapper all">
+					<div class="icon"></div>プレイリストにすべて追加
+				</div>
+			</div>
 		</section>
 		<section id="panel">
 			<div id="player">
@@ -92,31 +89,23 @@
 			</div>
 			<div id="playlist">
 				<div class="title">
-					<div class="circle"></div>再生リスト</div>
-				<div class="items"></div>
-			</div>
-			<div class="footer">
-				<div class="icon-wrapper save">
-					<div class="icon"></div>リストをクリア</div>
+					<div class="circle"></div>プレイリスト</div>
+				<div class="items">
+					<div class="empty">プレイリストは空です．
+						<p class="small">丸い「+」ボタンをクリックするとプレイリストに追加できます．</p>
+					</div>
+				</div>
+				<div class="footer">
+					<div class="flex flex-vertical-center flex-horizontal-center radius-none width-100ptg btn btn-super-sm icon-wrapper clear">
+						<div class="icon"></div>プレイリストをクリア
+					</div>
+				</div>
 			</div>
 		</section>
-	</div>
-	<div class="modal none">
-		<div class="text"></div>
-		<div class="flex">
-			<input type="text" class="radius-left" placeholder="例: 作業用BGM">
-			<span class="btn btn-primary btn-sm save radius-right">保存</span>
-		</div>
-		<span class="btn btn-sm close">保存せずに閉じる</span>
-
-
-
 	</div>
 	<script src="/javascripts/popper.min.js"></script>
 	<script src="/javascripts/tooltip.min.js"></script>
 	<script src="/javascripts/popup.js"></script>
 </body>
-
-<!--  -->
 
 </html>
