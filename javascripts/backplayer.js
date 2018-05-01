@@ -31,9 +31,8 @@ export default class Backplayer {
 
   // https://stackoverflow.com/questions/10461669/seek-to-a-point-in-html5-video
   seek(time) {
-    this.pause();
+    // this.pause();
     this.v.currentTime = time;
-    this.play();
   }
 
   play() {
@@ -46,6 +45,7 @@ export default class Backplayer {
 
   replay() {
     this.seek(0);
+    this.v.play();
   }
 
   loopon() {
