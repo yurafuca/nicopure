@@ -35,18 +35,8 @@ module.exports = [
         { from: "html", to: "../html" },
         { from: "javascripts/popper.min.js", to: "../javascripts/popper.min.js" },
         { from: "javascripts/tooltip.min.js", to: "../javascripts/tooltip.min.js" },
-        // {
-          // from: "src/javascripts/popper.min.js",
-          // to: "../javascripts/popper.min.js"
-        // },
-        // {
-          // from: "src/javascripts/tooltip.min.js",
-          // to: "../javascripts/tooltip.min.js"
-        // },
         { from: "stylesheets", to: "../stylesheets", ignore: [ '*.scss' ] },
         { from: "image", to: "../image" },
-        // { from: "src/octicons", to: "../octicons" },
-        // { from: "src/sounds", to: "../sounds" },
         { from: "fonts", to: "../fonts" },
         { from: "manifest.json", to: "../manifest.json" },
       ])
@@ -55,28 +45,5 @@ module.exports = [
     resolve: {
       extensions: [".js", ".jsx", ".scss"]
     }
-  },
-  // {
-  //   entry: {
-  //     popup: "./src/stylesheets/popup.scss",
-  //     content: "./src/stylesheets/content.scss",
-  //     options: "./src/stylesheets/options.scss"
-  //   },
-  //   output: {
-  //     path: path.resolve(__dirname, "./dist/assets/stylesheets/"),
-  //     filename: "[name].css"
-  //   },
-  //   module: {
-  //     rules: [
-  //       {
-  //         test: /\.scss$/,
-  //         use: ExtractTextPlugin.extract({
-  //           fallback: "style-loader",
-  //           use: ["css-loader", "sass-loader?outputStyle=expanded"]
-  //         })
-  //       }
-  //     ]
-  //   },
-  //   plugins: [new ExtractTextPlugin("[name].css")]
-  // }
+  }
 ];

@@ -2,7 +2,7 @@
   "name": "にこぷれ（ニコニコ動画プレイヤー）",
   "short_name": "にこぷれ",
   "manifest_version": 2,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "background": {
     "scripts": ["javascripts/background.js"]
   },
@@ -11,7 +11,7 @@
     "default_title": "にこぷれ",
     "default_popup": "html/popup.html"
   },
-  "description": "ニコニコ動画のバックグラウンドプレイヤ",
+  "description": "ニコニコ動画を音楽再生に特化させます．ニコニコ動画上にアップロードされた動画を音楽プレイヤー感覚でバックグラウンド再生します．マイリスト・プレイリストの編集ができます．",
   "icons": {
     "16": "image/icon.png",
     "32": "image/icon.png",
