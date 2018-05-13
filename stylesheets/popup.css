@@ -10,6 +10,7 @@ body {
   border: solid 1px #ddd;
   cursor: default;
   min-width: 798px; /* ポップアップのガタつき防止 */
+  height: 591px;
 }
 
 .flex {
@@ -124,7 +125,10 @@ input.search-input {
 }
 
 #main {
-  position: relative;
+  position: fixed;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 
 section {
@@ -336,7 +340,7 @@ section .footer .icon-wrapper.clear .icon {
 #mylists .items,
 #candidates .items {
   height: calc(100% - 99px);
-  min-height: 499px; /* ポップアップのガタつき防止 */
+  min-height: 497px; /* ポップアップのガタつき防止 */
 }
 
 #candidates {
@@ -344,9 +348,8 @@ section .footer .icon-wrapper.clear .icon {
 }
 
 #playlist .items {
-  min-height: 425px;
+  min-height: 423px;
   height: calc(100% - 173px);
-  /* overflow: auto; */
 }
 
 #mylists .items .mylist {
@@ -436,15 +439,9 @@ section .footer .icon-wrapper.clear .icon {
 }
 
 .video .title {
-  /* font-weight: 500; */
-  /* color: #444; */
   overflow: hidden;
   text-overflow: ellipsis;
   padding-bottom: 1px;
-
-  /**/
-  /* font-family: 'Meiryo'; */
-  /* font-weight: bold; */
 }
 
 .video .thumbnail_wrapper {
@@ -567,7 +564,6 @@ section .footer .icon-wrapper.clear .icon {
 
 #player {
   padding: 7px;
-  /* border-bottom: 1px solid #e5e5e5; */
   background-color: #fafafa;
   border-bottom: 1px solid #ddd;
 }
