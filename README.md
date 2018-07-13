@@ -8,6 +8,10 @@
 
 ---
 
+## How to Install
+
+[にこぷれ - Chrome Web Store](https://chrome.google.com/webstore/detail/%E3%81%AB%E3%81%93%E3%81%B7%E3%82%8C%EF%BC%88%E3%83%8B%E3%82%B3%E3%83%8B%E3%82%B3%E5%8B%95%E7%94%BB%E3%83%97%E3%83%AC%E3%82%A4%E3%83%A4%E3%83%BC%EF%BC%89/lghggdaidjonbfengmmpcalnhcibhcnh)
+
 ## Description
 
 ニコニコ動画上にアップロードされた動画をバックグラウンド再生する Google Chrome Extension です．音楽プレイヤー感覚で動画を再生できます．あわせて，マイリストの作成・削除，プレイリストの管理ができます．
